@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DotGothic16&display=swap');
+
+body {
+    background: #485563;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #29323c, #485563);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #29323c, #485563); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    font-family: 'Montserrat', sans-serif;  
+    text-align: center;
+    color: white;
+}
+
+h1 {
+    font-size: 80px;    
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+#newWord {
+    background-color: transparent ;
+    border-color: white;
+    color: white;
+    transition: .2s;
+    border-radius: 10px;
+    border: solid 1px white;
+    padding:18px 10px;
+    width:180px;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+#newWord:hover {
+    background-color:white;
+    color: black;
+    transform: scale(1.05);
+}
+
+#word {
+    font-size: larger;
+    width:500px;
+    height:50px;
+    margin:50px auto 50px auto;
+    text-transform: capitalize;
+}
+
+.center {
+    width:500px;
+    height:300px;
+    margin:150px auto 0px auto;
+}
+canvas{
+    border: white dashed 2px;
+    padding:15px;
+    width:400px;
+    height:250px;
+}
+
+#alphabet {
+  margin:75px auto;
+  padding:0;
+  max-width:900px;
+}
+
+#alphabet li {
+  float:left;
+  margin: 0 10px 10px 0;
+  list-style:none;
+  width:35px;
+  height:30px;
+  padding-top:10px;
+  background:transparent;
+  cursor:pointer;
+  border-radius: 5px;
+  border: solid 1px white;
+  font-size: 15px;
+  text-transform: uppercase;
+  transition: all 0.2s ease-in-out;
+  font-weight: 500;
+}
+
+#alphabet li:hover{
+    background: white;
+    border: solid 1px white;
+    color:black;
+    font-weight: 500;
+    transform: scale(1.05);
+}
+
+.active {
+    background-color: rgb(73, 73, 73) !important;
+    color: white;
+}
+
+#alphabet .active:hover {
+    color: white;
+    transform: scale(1) !important;
+    background-color: rgb(73, 73, 73) !important;
+}
+
+.active:hover {
+    color: white;
+    transform: scale(1) !important;
+}
+
+
+#my-word li {
+  position: relative;
+  list-style: none;
+  margin: 0;
+  display: inline-block;
+  padding: 0 10px;
+  font-size:1.6em;
+}
+
+#mylives{
+  font-size:1.6em;
+  text-align:center;
+  display:block;
+}
