@@ -54,7 +54,7 @@ window.onload = function () {
      comments = function () {
       showLives.innerHTML = "You have " + lives + " lives";
       if (lives < 1) {
-        showLives.innerHTML = "Game Over";
+        showLives.innerHTML = `Game Over. The word was ${randomWord.toUpperCase()}`;
       }
       for (var i = 0; i < geusses.length; i++) {
         if (counter + space === geusses.length) {
