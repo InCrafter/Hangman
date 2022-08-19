@@ -1,10 +1,8 @@
 import jsonFile from './words.json' assert {type: 'json'};
-const words = "arson";
-let randomWord;
-var guess ;             // Geuss
-var geusses = [ ];      // Stored geusses
-var lives ;             // Lives
-var counter ;           // Count correct geusses
+var guess;
+var geusses = [];
+var lives;
+var counter;
 let result;
 let comments;
 let canvas;
@@ -30,36 +28,61 @@ let wordHolder;
 let correct;
 let myStickman;
 let context;
-
-
-
+let wordCount;
+let difficulty;
+let button = document.getElementById('newWord')
+let saveLives;
+var drawMe = 9;
+let oneWord = document.getElementById('oneWord');
+let twoWord = document.getElementById('twoWord');
+let easy = document.getElementById('easy');
+let medium = document.getElementById('medium');
+let hard = document.getElementById('hard');
+let randomWord;
+let language;
 
 window.onload = function () { 
+
+
+  
     var showLives = document.getElementById("mylives"); 
 
-    const alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
-          'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
-          't', 'u', 'v', 'w', 'x', 'y', 'z'];
+    const alphabetEN = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
+    const alphabetDE = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "ä", "ö", "ü", "ß"];
     
     const buttons = function () {
       myButtons = document.getElementById('buttons');
       letters = document.createElement('ul');
-  
-      for (var i = 0; i < alphabet.length; i++) {
-        letters.id = 'alphabet';
-        list = document.createElement('li');
-        list.id = 'letter';
-        list.innerHTML = alphabet[i];
-        check();
-        myButtons.appendChild(letters);
-        letters.appendChild(list);
+
+      if (language === "en") {
+        for (var i = 0; i < alphabetEN.length; i++) {
+          letters.id = 'alphabet';  
+          list = document.createElement('li');
+          list.id = 'letter';
+          list.innerHTML = alphabetEN[i];
+          check();
+          myButtons.appendChild(letters);
+          letters.appendChild(list);
+        }
+       } else if (language === "de") {
+          for (var i = 0; i < alphabetDE.length; i++) {
+            letters.id = 'alphabet';  
+            list = document.createElement('li');
+            list.id = 'letter';
+            list.innerHTML = alphabetDE[i];
+            check();
+            myButtons.appendChild(letters);
+            letters.appendChild(list);
+        }
+       }
       }
-    }
       
   
-     result = function () {
-      randomWord = jsonFile[Math.floor(Math.random()*jsonFile.length)];
-      console.log(randomWord)
+     result = async function () {
+      const response = await fetch("https://random-word-api.herokuapp.com/word?lang=" + language);
+      await response.json().then(word => randomWord = word[0].toLowerCase());
+      test()
+
       wordHolder = document.getElementById('word');
       correct = document.createElement('ul');
   
@@ -77,19 +100,60 @@ window.onload = function () {
     
      comments = function () {
       showLives.innerHTML = "You have " + lives + " lives";
+      const alp = document.getElementById("alphabet");
       if (lives < 1) {
         showLives.innerHTML = `Game Over. The word was ${randomWord.toUpperCase()}`;
+        button.disabled = false;
+        oneWord.disabled = false;
+        twoWord.disabled = false;
+        easy.disabled = false;
+        medium.disabled = false;
+        hard.disabled = false;
+        letters.disabled = true;
+        lives = saveLives; 
+        if(alp){
+          alp.remove();
+        }
       }
       for (var i = 0; i < geusses.length; i++) {
         if (counter + space === geusses.length) {
           showLives.innerHTML = "You Win!";
+          button.disabled = false;
+          oneWord.disabled = false;
+          twoWord.disabled = false;
+          easy.disabled = false;
+          medium.disabled = false;
+          hard.disabled = false;
+          lives = saveLives; 
+          if(alp){
+            alp.remove();
+          }
         }
       }
     }
   
     var animate = function () {
-      var drawMe = lives ;
-      drawArray[drawMe]();
+      if (saveLives === 10) {
+        drawArray[drawMe]();
+        drawMe -= 1;
+      } else if (saveLives === 5) {
+        drawArray[drawMe]();
+        drawMe -= 1;
+        drawArray[drawMe]();
+        drawMe -= 1;
+      } else if (saveLives === 2) {
+        drawArray[drawMe]();
+        drawMe -= 1;
+        drawArray[drawMe]();
+        drawMe -= 1;
+        drawArray[drawMe]();
+        drawMe -= 1;
+        drawArray[drawMe]();
+        drawMe -= 1;
+        drawArray[drawMe]();
+        drawMe -= 1;
+      }
+      
     }
     
     canvas =  function(){
@@ -157,19 +221,20 @@ window.onload = function () {
      check = function () {
       list.onclick = function () {
         var geuss = (this.innerHTML);
-          
         this.onclick = null;
         for (var i = 0; i < randomWord.length; i++) {
           if (randomWord[i] === geuss) {
+            this.setAttribute("class", "active");
             geusses[i].innerHTML = geuss;
             counter += 1;
           } 
         }
         var j = (randomWord.indexOf(geuss));
         if (j === -1) {
+          this.setAttribute("class", "wrong");
           lives -= 1;
-          comments();
           animate();
+          comments();
         } else {
           comments();
         }
@@ -179,7 +244,6 @@ window.onload = function () {
     play = function () {
       buttons();
       geusses = [ ];
-      lives = 10;
       counter = 0;
       space = 0;
       result();
@@ -187,14 +251,95 @@ window.onload = function () {
       canvas();
     }
   
-    play();
-
-
+    
     // reset
     document.getElementById('newWord').onclick = function() {
-      correct.parentNode.removeChild(correct);
-      letters.parentNode.removeChild(letters);
-      context.clearRect(0, 0, 400, 400);
+      document.getElementById("word").style.display = "block";
+      document.getElementById("mylives").style.display = "block";
+      document.getElementById("buttons").style.display = "block";
+      document.getElementById("stickman").style.display = "block";
+      button.disabled = true;
+      oneWord.disabled = true;
+      twoWord.disabled = true;
+      easy.disabled = true;
+      medium.disabled = true;
+      hard.disabled = true;
+      drawMe = 9;
+
+
+
+      const text = document.getElementById("my-word");
+      if(text){
+        text.remove();
+      }
       play();
+      context.clearRect(0, 0, 400, 400);
+    }
+
+    
+
+    function chooseWord(type) {
+
+      if (type === "oneWord") {
+        language = "en";
+        twoWord.setAttribute("class", "");
+        oneWord.setAttribute("class", "oneWordSelected");
+      } else if (type === "twoWord") {
+        language = "de";
+        oneWord.setAttribute("class", "");
+        twoWord.setAttribute("class", "TwoWordSelected");
+      }
+      
+      if (type === "easy") {
+        difficulty = "easy";
+        easy.setAttribute("class", "EasySelected");
+        medium.setAttribute("class", "");
+        hard.setAttribute("class", "");
+        lives = 10;
+        saveLives = 10;
+      } else if (type === "medium") {
+        difficulty = "easy";
+        medium.setAttribute("class", "MediumSelected");
+        easy.setAttribute("class", "");
+        hard.setAttribute("class", "");
+        lives = 5;
+        saveLives = 5;
+      } else if (type === "hard") {
+        difficulty = "easy";
+        hard.setAttribute("class", "HardSelected");
+        medium.setAttribute("class", "");
+        easy.setAttribute("class", "");
+        lives = 2;
+        saveLives = 2;
+      }
+
+      if (difficulty && language  ) {
+        button.disabled = false;
+      }
+    }
+
+    document.getElementById('oneWord').onclick = function() {
+      chooseWord("oneWord")
+    }
+
+    document.getElementById('twoWord').onclick = function() {
+      chooseWord("twoWord")
+    }
+
+    document.getElementById('easy').onclick = function() {
+      chooseWord("easy")
+    }
+
+    document.getElementById('medium').onclick = function() {
+      chooseWord("medium")
+    }
+
+    document.getElementById('hard').onclick = function() {
+      chooseWord("hard")
+    }
+
+    function test() {
+      document.title = randomWord;
     }
   }
+

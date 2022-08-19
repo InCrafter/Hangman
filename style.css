@@ -7,7 +7,12 @@ body {
     background: linear-gradient(to right, #29323c, #485563); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     font-family: 'Montserrat', sans-serif;  
     text-align: center;
-    color: white;
+    color: white;-webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none;
 }
 
 h1 {
@@ -22,6 +27,19 @@ ul {
 }
 
 #newWord {
+    background-color: white ;
+    border-color: white;
+    color: black;
+    transition: .2s;
+    border-radius: 10px;
+    border: solid 1px white;
+    padding:18px 10px;
+    width:180px;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+#newWord:disabled {
     background-color: transparent ;
     border-color: white;
     color: white;
@@ -32,9 +50,14 @@ ul {
     width:180px;
     font-size: 1.2rem;
     cursor: pointer;
+  }
+
+#newWord:hover:disabled {
+    cursor:not-allowed;
+    transform: scale(1);
 }
 
-#newWord:hover {
+#newWord:hover:enabled {
     background-color:white;
     color: black;
     transform: scale(1.05);
@@ -42,8 +65,7 @@ ul {
 
 #word {
     font-size: larger;
-    width:500px;
-    height:50px;
+
     margin:50px auto 50px auto;
     text-transform: capitalize;
 }
@@ -91,18 +113,44 @@ canvas{
     transform: scale(1.05);
 }
 
-.active {
-    background-color: rgb(73, 73, 73) !important;
+#alphabet li:disabled{
+    background: transparent;
+    border: solid 1px white;
+    color:black;
+    font-weight: 500;
+    transform: scale(1);
+}
+
+#alphabet .active {
+    background-color: rgb(23, 199, 23) !important;
     color: white;
 }
 
 #alphabet .active:hover {
     color: white;
     transform: scale(1) !important;
-    background-color: rgb(73, 73, 73) !important;
+    background-color: rgb(23, 199, 23) !important;
+    cursor: default;
 }
 
-.active:hover {
+#alphabet .active:hover {
+    color: white;
+    transform: scale(1) !important;
+}
+
+#alphabet .wrong {
+    background-color: rgb(231, 43, 43)!important;
+    color: white;
+}
+
+#alphabet .wrong:hover {
+    color: white;
+    transform: scale(1) !important;
+    background-color: rgb(231, 43, 43) !important;
+    cursor: default;
+}
+
+.wrong:hover {
     color: white;
     transform: scale(1) !important;
 }
@@ -124,3 +172,113 @@ canvas{
     width:500px;
     margin:10px auto 0px auto;
 }
+
+
+
+button {
+    background-color: transparent ;
+    color: white;
+    transition: .2s;
+    border-radius: 10px;
+    padding:18px 10px;
+    width:180px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin: 5px;
+    border-color: white;
+}
+
+.oneWordSelected {
+    background-color: white;
+    border: solid 1px white;
+    color: black;
+}
+
+.TwoWordSelected {
+    background-color: white;
+    border: solid 1px white;
+    color: black;
+}
+
+.EasySelected {
+    background-color: rgb(23, 199, 23);
+    border: solid 1px rgb(23, 199, 23);
+}
+
+.MediumSelected {
+    background-color: rgb(231, 187, 43);
+    border: solid 1px rgb(231, 187, 43);
+}
+
+.HardSelected {
+    background-color: rgb(231, 43, 43);
+    border: solid 1px rgb(231, 43, 43);
+}
+
+/*---------------------------*/
+
+
+#easy:hover {
+    background-color: rgb(23, 199, 23);
+    border: solid 1px rgb(23, 199, 23);
+    color: white;
+}
+
+#medium:hover {
+    background-color: rgb(231, 187, 43);
+    border: solid 1px rgb(231, 187, 43);
+    color: white;
+}
+
+#hard:hover {
+    background-color: rgb(231, 43, 43);
+    border: solid 1px rgb(231, 43, 43);
+    color: white;
+}
+
+.difficulty {
+    margin: 10px 0 10px;
+    list-style:none;
+}
+
+button:hover {
+    color: black;
+    background-color:white;
+    transform: scale(1.07);
+}
+
+/*------------------------------------------*/
+
+#oneWord:hover:disabled {
+    background-color: rgb(23, 199, 23);
+    transform: scale(1);
+    cursor: not-allowed;
+}
+
+#twoWord:hover:disabled {
+    background-color: rgb(231, 187, 43);
+    transform: scale(1);
+    cursor: not-allowed;
+}
+
+#threeWord:hover:disabled {
+    background-color: rgb(231, 43, 43);
+    transform: scale(1);
+    cursor: not-allowed;
+}
+
+#easy:hover:disabled {
+    background-color: rgb(23, 199, 23);
+    transform: scale(1);
+    cursor: not-allowed;
+}
+
+#medium:hover:disabled {
+    background-color: rgb(231, 187, 43);
+    transform: scale(1);
+    cursor: not-allowed;}
+
+#hard:hover:disabled {
+    background-color: rgb(231, 43, 43);
+    transform: scale(1);
+    cursor: not-allowed;}

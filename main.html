@@ -9,16 +9,25 @@
 </head>
 <body>
     <h1>Hangman</h1>
-    <p style="color: white; font-size: smaller;">Correct Guesses: 69</p>
-    <button id="newWord">New Word</button>
-    <!--<p id="word" style="color: white;">Loading...</p>-->
-    <div id="word"></div>
-    <p id="mylives"></p> 
+    <div class="menu">
+        <div class="word">
+            <button id="oneWord">English</button>
+            <button id="twoWord">German</button>
+        </div>
+        <div class="difficulty">
+            <button id="easy">Easy</button>
+            <button id="medium">Medium</button>
+            <button id="hard">Hard</button>
+        </div>
+    </div>
+    <button disabled id="newWord">New Word</button>
+    <div style="margin-bottom: 10px; " id="word"></div>
+    <p style="margin-top: 0px; " id="mylives"></p> 
     <div id="buttons">
     </div>  
-    
+
     <div class="center">
-        <canvas id="stickman">wassup</canvas>
+        <canvas id="stickman"></canvas>
     </div>
     <div class="container">
     </div>
