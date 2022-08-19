@@ -1,16 +1,40 @@
-const words = ["abruptly", "absurd", "abyss", "affix", "askew", "avenue", "awkward", "axiom", "azure", "bagpipes", "bandwagon", "banjo", "bayou", "beekeeper", "bikini", "blitz", "blizzard", "boggle", "bookworm", "boxcar", "boxful", "buckaroo", "buffalo", "buffoon", "buxom", "buzzard", "buzzing", "buzzwords", "caliph", "cobweb", "cockiness", "croquet", "crypt", "curacao", "cycle", "daiquiri", "dirndl", "disavow", "dizzying", "duplex", "dwarves", "embezzle", "equip", "espionage", "euouae", "exodus", "faking", "fishhook", "fixable", "fjord", "flapjack", "flopping", "fluffiness", "flyby", "foxglove", "frazzled", "frizzled", "fuchsia", "funny", "gabby", "galaxy", "galvanize", "gazebo", "giaour", "gizmo", "glowworm", "glyph", "gnarly", "gnostic", "gossip", "grogginess", "haiku", "haphazard", "hyphen", "iatrogenic", "icebox", "injury", "ivory", "ivy", "jackpot", "jaundice", "jawbreaker", "jaywalk", "jazziest", "jazzy", "jelly", "jigsaw", "jinx", "jiujitsu", "jockey", "jogging", "joking", "jovial", "joyful", "juicy", "jukebox", "jumbo", "kayak", "kazoo", "keyhole", "khaki", "kilobyte", "kiosk", "kitsch", "kiwifruit", "klutz", "knapsack", "larynx", "lengths", "lucky", "luxury", "lymph", "marquis", "matrix", "megahertz", "microwave", "mnemonic", "mystify", "naphtha", "nightclub", "nowadays", "numbskull", "nymph", "onyx", "ovary", "oxidize", "oxygen", "pajama", "peekaboo", "phlegm", "pixel", "pizazz", "pneumonia", "polka", "pshaw", "psyche", "puppy", "puzzling", "quartz", "queue", "quips", "quixotic", "quiz", "quizzes", "quorum", "razzmatazz", "rhubarb", "rhythm", "rickshaw", "schnapps", "scratch", "shiv", "snazzy", "sphinx", "spritz", "squawk", "staff", "strength", "strengths", "stretch", "stronghold", "stymied", "subway", "swivel", "syndrome", "thriftless", "thumbscrew", "topaz", "transcript", "transgress", "transplant", "triphthong", "twelfth", "twelfths", "unknown", "unworthy", "unzip", "uptown", "vaporize", "vixen", "vodka", "voodoo", "vortex", "voyeurism", "walkway", "waltz", "wave", "wavy", "waxy", "wellspring", "wheezy", "whiskey", "whizzing", "whomever", "wimpy", "witchcraft", "wizard", "woozy", "wristwatch", "wyvern", "xylophone", "yachtsman", "yippee", "yoked", "youthful", "yummy", "zephyr", "zigzag", "zigzagging", "zilch", "zipper", "zodiac", "zombie"]
-const char = "_ ";
+import jsonFile from './words.json' assert {type: 'json'};
+const words = "arson";
 let randomWord;
-let wordLength;
-var getHint ;          // Word getHint
 var guess ;             // Geuss
 var geusses = [ ];      // Stored geusses
 var lives ;             // Lives
 var counter ;           // Count correct geusses
+let result;
+let comments;
+let canvas;
+let head;
+let draw;
+let frame1;
+let frame2;
+let frame3;
+let frame4;
+let torso;
+let rightArm;
+let rightLeg;
+let leftArm;
+let leftLeg;
+let drawArray;
+let check;
+let play;
+let myButtons;
+let letters;
+let list;
+let space;
+let wordHolder;
+let correct;
+let myStickman;
+let context;
 
 
 
-window.onload = function () {
+
+window.onload = function () { 
     var showLives = document.getElementById("mylives"); 
 
     const alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
@@ -34,7 +58,7 @@ window.onload = function () {
       
   
      result = function () {
-      randomWord = words[Math.floor(Math.random()*words.length)];
+      randomWord = jsonFile[Math.floor(Math.random()*jsonFile.length)];
       console.log(randomWord)
       wordHolder = document.getElementById('word');
       correct = document.createElement('ul');
@@ -63,14 +87,11 @@ window.onload = function () {
       }
     }
   
-        // Animate man
     var animate = function () {
       var drawMe = lives ;
       drawArray[drawMe]();
     }
-  
     
-     // Hangman
     canvas =  function(){
   
       myStickman = document.getElementById("stickman");
@@ -136,7 +157,7 @@ window.onload = function () {
      check = function () {
       list.onclick = function () {
         var geuss = (this.innerHTML);
-        this.setAttribute("class", "active");
+          
         this.onclick = null;
         for (var i = 0; i < randomWord.length; i++) {
           if (randomWord[i] === geuss) {
@@ -168,7 +189,8 @@ window.onload = function () {
   
     play();
 
-  
+
+    // reset
     document.getElementById('newWord').onclick = function() {
       correct.parentNode.removeChild(correct);
       letters.parentNode.removeChild(letters);
